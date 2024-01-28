@@ -14,7 +14,11 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
 
-    public List<Board> getAllUser(){
+    public List<Board> getAllBoard(){
         return boardRepository.findAll();
+    }
+
+    public List<Board> getSearchBoard(String keyword){
+        return boardRepository.findByTitleContaining(keyword);
     }
 }
