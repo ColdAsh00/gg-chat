@@ -13,7 +13,7 @@ import gg.together.chat.service.BoardService;
 public class ChatController {
 
 
-    @GetMapping("/")
+    @GetMapping("/") // 홈 페이지
     public String getMethodName(Model model) {
         return "home";
     }

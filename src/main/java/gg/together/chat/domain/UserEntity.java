@@ -6,15 +6,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity
 @Data
-public class Board {
-    
+@Entity
+public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String title;
-    private String content;
-    private String sessions;
+    private String username;
+
+    private String password;
+
+    private String nickname;
+
+    private String email;
 }

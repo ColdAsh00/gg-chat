@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import gg.together.chat.domain.Board;
+import gg.together.chat.domain.BoardEntity;
 import gg.together.chat.service.BoardService;
 
 
@@ -19,8 +19,8 @@ public class BoardController {
     
     @GetMapping("/board")
     public String boardPage(Model model, String searchKeyword) {
-        // searchKeyword 파라매터 값에따라 변환
-        List<Board> list = searchKeyword == null ? boardService.getAllBoard() : boardService.getSearchBoard(searchKeyword);
+        // searchKeyword 파라미터 값에따라 변환
+        List<BoardEntity> list = searchKeyword == null ? boardService.getAllBoard() : boardService.getSearchBoard(searchKeyword);
         model.addAttribute("board", list);
         return "board/boardMain";
     }
