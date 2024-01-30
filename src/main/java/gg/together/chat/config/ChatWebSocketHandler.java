@@ -23,10 +23,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
         CLIENTS.put(session.getId(), session);
     }
 
-    // 연결이 취소되면 함수 호출
+    // 연결이 종료되면 함수 호출
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        System.out.println("id :" + session.getId() + " 님이 연결 취소되었습니다.");
+        System.out.println("id :" + session.getId() + " 님이 연결 종료되었습니다.");
         CLIENTS.remove(session.getId());
     }
 

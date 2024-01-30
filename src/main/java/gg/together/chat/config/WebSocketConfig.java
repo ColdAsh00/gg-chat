@@ -21,6 +21,6 @@ public class WebSocketConfig implements WebSocketConfigurer{
     // "*" 을 사용하여 모든 도메인 접속 허용
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry){
-        registry.addHandler(webSocketHandler, "/chat").setAllowedOrigins("*");
+        registry.addHandler(webSocketHandler, "/chat").setAllowedOriginPatterns("*"); // origins 대신 originPatterns 사용
     }
 }
