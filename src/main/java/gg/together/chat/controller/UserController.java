@@ -75,5 +75,5 @@ public class UserController {
         System.out.println(joinRequest.getNickname() + " 님 회원가입되었습니다.");
         return "redirect:/v1";
     }
-    
+    // 
 }
