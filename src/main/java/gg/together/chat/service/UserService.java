@@ -1,7 +1,8 @@
 package gg.together.chat.service;
 
 import gg.together.chat.domain.User;
-import gg.together.chat.dto.LoginRequestDto;
+import gg.together.chat.dto.request.JoinRequest;
+import gg.together.chat.dto.request.LoginRequest;
 import gg.together.chat.repository.UserRepository;
 
 import java.util.Optional;
@@ -10,17 +11,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class UserService {
 
     @Autowired // 자동 객체 생성
     private UserRepository userRepository;
 
-    public Optional<User> getUser(){
-        return userRepository.findById(1);
+    /** userId 중복 체크 */
+    public boolean checkUserIdDuplicate(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
+    /** nickname 중복 체크 */
+    public boolean checkNicknameDuplicate(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
+
+    /** 회원가입 기능 */
+    @SuppressWarnings("null")
+    public void join(JoinRequest req) {
+        userRepository.save(req.toEntity());
+        System.out.println("성공");
     }
 
     /** 로그인 기능*/
-    public User login(LoginRequestDto req) {
+    public User login(LoginRequest req) {
         Optional<User> optionalUser = userRepository.findByUserId(req.getUserId());
 
         // loginId와 일치하는 User가 없으면 null return
@@ -39,4 +54,6 @@ public class UserService {
 
         return user;
     }
+
+    
 }
