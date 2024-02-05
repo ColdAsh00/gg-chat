@@ -3,7 +3,10 @@ package gg.together.chat.controller;
 import gg.together.chat.domain.User;
 import gg.together.chat.dto.request.JoinRequest;
 import gg.together.chat.dto.request.LoginRequest;
+import gg.together.chat.service.SessionService;
 import gg.together.chat.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +20,14 @@ public class UserController {
 
     @Autowired // 자동 객체 생성
     private UserService userService;
+    @Autowired
+    private SessionService sessionService;
 
     @GetMapping("/v1")
-    public String homePage(Model model) {
+    public String homePage(Model model, HttpServletRequest request) {
         model.addAttribute("pageName", "User DB");
         model.addAttribute("loginType", "v1");
+        model.addAttribute("nickname", sessionService.getSession(request, "sessionName"));
         return "user/home";
     }
 
@@ -34,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/{loginType}/login")
-    public String logining(LoginRequest loginRequest) {
+    public String logining(LoginRequest loginRequest, HttpServletRequest request) {
         
         // null이 뜨면 return 
         if(userService.login(loginRequest) == null){
@@ -42,7 +48,7 @@ public class UserController {
         }
 
         User user = userService.login(loginRequest);
-        System.out.println(user.getNickname() + "님 환영합니다. ");
+        sessionService.setSession(request, user);
         return "redirect:/v1";
     }
 
