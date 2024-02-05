@@ -27,7 +27,7 @@ public class UserController {
     public String homePage(Model model, HttpServletRequest request) {
         model.addAttribute("pageName", "User DB");
         model.addAttribute("loginType", "v1");
-        model.addAttribute("nickname", sessionService.getSession(request, "sessionName"));
+        model.addAttribute("nickname", sessionService.getNickname(request, "sessionName"));
         return "user/home";
     }
 
@@ -81,5 +81,18 @@ public class UserController {
         System.out.println(joinRequest.getNickname() + " 님 회원가입되었습니다.");
         return "redirect:/v1";
     }
-    // 
+
+    @GetMapping("/{loginType}/info")
+    public String infoPage(Model model, HttpServletRequest request) {
+        model.addAttribute("pageName", "User DB");
+        model.addAttribute("loginType", "v1");
+        model.addAttribute("user", sessionService.getUser(request, "sessionName"));
+        return "user/info";
+    }
+
+    @GetMapping("/{loginType}/logout")
+    public String loginout(HttpServletRequest request) {
+        sessionService.outSession(request);
+        return "redirect:/v1";
+    }
 }
