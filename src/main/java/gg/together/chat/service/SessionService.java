@@ -14,13 +14,31 @@ public class SessionService {
         session.setAttribute("sessionName", user);
     }
 
-    public String getSession(HttpServletRequest request, String sessionName) {
+    public String getNickname(HttpServletRequest request, String sessionName) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(sessionName);
         if(user == null){
             return null;
         } else {
             return user.getNickname();
+        }
+    }
+    
+    public User getUser(HttpServletRequest request, String sessionName) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(sessionName);
+        if(user == null){
+            return null;
+        } else {
+            return user;
+        }
+    }
+
+    public void outSession(HttpServletRequest request){
+        HttpSession session = request.getSession(false); 
+
+        if(session != null){
+            session.invalidate();
         }
     }
 }
